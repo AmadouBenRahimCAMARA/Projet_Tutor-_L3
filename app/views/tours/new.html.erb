@@ -1,0 +1,30 @@
+<%= form_with(model: [@tontine, @tour]) do |form| %>
+  <% if @tour.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@tour.errors.count, "error") %> prohibited this tour from being saved:</h2>
+
+      <ul>
+        <% @tour.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  
+  <%= form.hidden_field :ordre %>
+
+  <div>
+    <%= form.label :date_tirage, "Date du tirage" %>
+    <%= form.date_field :date_tirage %>
+  </div>
+
+  <div>
+    <%= form.label :beneficiaire_id, "Bénéficiaire (optionnel)" %>
+    <%= form.select :beneficiaire_id, options_from_collection_for_select(@beneficiaires_possibles, :id, :nom_complet, @tour.beneficiaire_id), prompt: "Choisir un bénéficiaire" %>
+  </div>
+
+  <div>
+    <%= form.submit "Créer le tour" %>
+  </div>
+<% end %>
